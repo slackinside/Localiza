@@ -1,0 +1,76 @@
+<?php echo $this->getContent(); ?>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Usuário<small> -- Gestão de Pacotes</small>
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <?php echo $this->tag->form(array('users/assocPackage', 'method' => 'post')); ?>
+            <div class="col-lg-8">
+                <?php echo $this->flash->output(); ?>    
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-gears"></i> Grelha de Usuários</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-10">
+                            <table class="table col-lg-5">
+                                <thead>
+                                    <tr>
+                                        <th>ID Pacote</th>
+                                        <th>Nome do Pacote</th>
+                                        <th>Preço do Pacote</th>
+                                        <th>Cliente Associado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (isset($userPackages)) { ?>
+                                    <?php foreach ($packages as $package) { ?>
+                                    <?php foreach ($userPackages as $userPackage) { ?>
+                                    <tr>
+                                        <?php if (isset($userPackage->Pacote_id)) { ?><td><?php echo $package->Pacote_id; ?></td><td><?php echo $package->Pacote_nome; ?></td><td><?php echo $package->Pacote_preco; ?></td><?php } else { ?><?php break; ?><?php } ?>
+                                        <td><?php foreach ($users as $user) { if (isset($userPackage->Usuario_id) && $userPackage->Usuario_id == $user->Usuario_id) { ?> <?php echo $user->Usuario_nome; ?> <?php $counter += 1; ?> <?php } ?><?php } ?> <?php if ($counter == 0) { ?> Não <?php } ?> </td>
+                                    </tr>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="selects" class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-gears"></i> Associação Cliente - Pacote</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4><span class="label label-default">Cliente</span></h4>
+                        <div class="input-group col-sm-11">
+                            <?php echo $this->tag->select(array('user', $usersSelect, 'id' => 'user', 'class' => 'form-control', 'using' => array('id', 'name'), 'onchange' => 'verifyAssoc(this.value,document.getElementById("pacote").value)')); ?>
+                        </div>
+                        <h4><span class="label label-default">Pacote</span></h4>
+                        <div id="users" class="input-group col-sm-11">
+                            <?php echo $this->tag->select(array('pacote', $packagesSelect, 'id' => 'pacote', 'class' => 'form-control', 'using' => array('id', 'name'), 'onchange' => 'verifyAssoc(document.getElementById("user").value, this.value)')); ?>
+                        </div>
+                        <br>
+                        <p>
+                            <div id="assoc">
+                            <?php echo $this->tag->hiddenField(array('status', 'value' => $status)); ?>
+                            <?php echo $this->tag->submitButton(array($showStatus, 'class' => 'btn btn-primary')); ?>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+                               

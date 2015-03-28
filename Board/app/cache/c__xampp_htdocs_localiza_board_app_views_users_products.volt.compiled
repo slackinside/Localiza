@@ -1,0 +1,122 @@
+<div class="col-lg-12">
+        <h1 class="page-header">
+            Permissões -- <small> Usuário - Produto</small>
+        </h1>
+
+<div class="row">
+    <?php echo $this->tag->form(array('users/assoc', 'id' => 'formUP', 'method' => 'post')); ?>
+    <div class="col-lg-9">
+        <?php echo $this->flash->output(); ?>
+        <div id="assoc" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-gears"></i> Selecione os Produtos a Associar</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-9">
+                   
+                    <table class="table col-lg-9">
+                    <thead>
+                        <tr>
+                            <th>ID Produto</th>
+                            <th>Descrição</th>
+                            <th>Preço Produto</th>
+                            <th>Taxa Desconto %</th>
+                            <th>Selecionar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($products)) { ?>
+                        <?php $counterDiscount = 0; ?>   
+                        <?php $counter = 0; ?>
+                        <?php foreach ($products as $product) { ?>
+                        <tr>
+                            <td class="col-sm-2"><?php echo $this->tag->textField(array('product_id[' . $product['product_id'] . ']', 'value' => $product['product_id'], 'class' => 'form-control', 'readonly' => 'true')); ?></td>
+                            <td><?php echo $product['product_name']; ?></td>
+                            <td><?php echo $product['product_price']; ?></td>
+                            <td class="col-sm-2"><?php echo $this->tag->numericField(array('product_discount[' . $product['product_id'] . ']', 'id' => 'product_discount' . $product['product_id'], 'class' => 'form-control')); ?></td>
+                            <td><?php echo $this->tag->checkField(array('list[' . $product['product_id'] . ']', 'value' => $product['product_id'], 'class' => 'large')); ?></td>
+                        </tr>
+                        <?php } ?>
+                        <?php } ?>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="assocEditRem" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-gears"></i> Selecione os Produtos a Associar</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-11">
+                    <table class="table col-lg-11">
+                    <thead>
+                        <tr>
+                            <th>ID Produto</th>
+                            <th>Descrição</th>
+                            <th>Taxa Desconto %</th>
+                            <th>Preço com Desconto</th>
+                            <th>Usuário Associado</th>
+                            <th>Editar/Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($usersProducts)) { ?>
+                        <?php $counterDiscount = 0; ?>   
+                        <?php $counter = 1; ?>
+                        <?php foreach ($usersProducts as $userProduct) { ?>
+                        <tr>
+                            <td class="col-sm-2"><?php echo $this->tag->textField(array('product_id[' . $userProduct['product_id'] . ']', 'value' => $userProduct['product_id'], 'class' => 'form-control', 'readonly' => 'true')); ?></td>
+                            <td><?php echo $userProduct['product_name']; ?></td>
+                            <td class="col-sm-2"><?php echo $this->tag->numericField(array('product_discount[' . $userProduct['product_id'] . '-' . $userProduct['user_id'] . ']', 'id' => 'product_discount' . $userProduct['user_id'] . $userProduct['product_id'], 'onclick' => 'setDiscount(' . $userProduct['user_id'] . ',' . $userProduct['product_id'] . ', this.id)', 'class' => 'form-control')); ?></td>
+                            <td><?php echo $userProduct['product_price_with_discount']; ?></td>
+                            <td><?php echo $userProduct['user_name']; ?> <?php echo $this->tag->hiddenField(array('user_id', 'id' => 'user_id')); ?></td>
+                            <td><a href="/Localiza/Board/users/editAssoc/1/<?php echo $userProduct['user_id']; ?>/<?php echo $userProduct['product_id']; ?>/0" id="edit<?php echo $userProduct['user_id']; ?>-<?php echo $userProduct['product_id']; ?>" class="btn btn-warning" >Editar</a>  <?php echo $this->tag->checkField(array('listAssocEdit[' . $counter . ']', 'value' => $userProduct['product_id'] . '-' . $userProduct['user_id'], 'onclick' => 'setAction(\'/Localiza/Board/users/editAssoc/1/0/0\')', 'class' => 'large')); ?>  <a href="/Localiza/Board/users/remAssoc/1/<?php echo $userProduct['product_id']; ?>/<?php echo $userProduct['user_id']; ?>" class="btn btn-danger" >Remover</a>  <?php echo $this->tag->checkField(array('listAssocRem[' . $counter . ']', 'value' => $userProduct['product_id'] . '-' . $userProduct['user_id'], 'onclick' => 'setAction(\'/Localiza/Board/users/remAssoc/1/0/0\')', 'class' => 'large')); ?></td>
+                        </tr>
+                        <?php $counter += 1; ?>
+                        <?php } ?>
+                        <?php } ?>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="selects" class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-gears"></i> Escolha o tipo de Usuário</h3>
+            </div>
+            <div class="panel-body">
+                <div class="input-group col-sm-11">
+                    <?php echo $this->tag->select(array('type', $usersType, 'id' => 'type', 'class' => 'form-control', 'using' => array('id', 'name'), 'onchange' => 'showByTypeUser(this.value,0)')); ?>
+                </div>
+            </div>
+        </div>
+        <div id="allUsers" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-gears"></i> Escolha Usuário</h3>
+            </div>
+            <div class="panel-body">
+                <div id="users" class="input-group col-sm-11">
+                    <?php echo $this->tag->select(array('users[]', $usersOutAssoc, 'id' => 'users[]', 'class' => 'selectpicker', 'using' => array('user_id', 'user_name'), 'multiple' => 'multiple')); ?>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-gears"></i> Controlos</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-3">
+                    <p><?php echo $this->tag->submitButton(array('Realizar Associações', 'id' => 'finishAssoc', 'class' => 'btn btn-success')); ?>
+                    <?php echo $this->tag->submitButton(array('Realizar Alterações', 'id' => 'finishEditAssoc', 'class' => 'btn btn-success')); ?>
+                    <p><a href="#" id="editAssoc" onclick="showHideAssocEditRem('/Localiza/Board/users/editAssoc/1/0/0/0')" class="btn btn-warning" >Ver Associações</a>
+                    <a href="#" id="createAssoc" onclick="showHideAssocEditRem('/Localiza/Board/users/assoc')" class="btn btn-info" >Criar Associações</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+</div>

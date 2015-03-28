@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <?php echo $this->tag->getTitle(); ?>
+        <?php echo $this->tag->stylesheetLink('css/estilo.css'); ?> 
+        <?php echo $this->tag->stylesheetLink('css/logado.css'); ?>
+        <?php echo $this->tag->stylesheetLink('css/slippry.css'); ?> 
+        <?php echo $this->tag->javascriptInclude('js/jquery-1.11.2.min.js'); ?>
+        <?php echo $this->tag->stylesheetLink('css/bootstrap.min.css'); ?> 
+        <?php echo $this->tag->stylesheetLink('css/font-awesome.min.css'); ?>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Armando Freitas">
+    </head>
+    <body>
+     <?php echo $this->getContent(); ?>
+     <?php echo $this->tag->javascriptInclude('js/bootstrap.min.js'); ?> 
+     <?php echo $this->tag->javascriptInclude('js/jquery-ui.min.js'); ?>
+     <?php echo $this->tag->javascriptInclude('js/customElements.js'); ?>
+     <?php echo $this->tag->javascriptInclude('js/slippry.min.js'); ?> 
+     <?php echo $this->tag->javascriptInclude('js/funcoes.js'); ?>
+</body>
+</html>

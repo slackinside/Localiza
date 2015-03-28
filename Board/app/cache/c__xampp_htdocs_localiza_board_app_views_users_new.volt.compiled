@@ -1,0 +1,81 @@
+<?php echo $this->getContent(); ?>
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Usuário<small> -- Cadastro</small>
+                </h1>
+            </div>
+        </div>
+        <?php echo $this->tag->form(array('users/register', 'method' => 'post')); ?>
+            <p><?php echo $this->flash->output(); ?></p>
+            <p>
+            <h3><label class="label label-default">Informação de Contato</label></h3>
+            </p>
+            <p>
+            <div class="input-group col-sm-3">
+                <span class="input-group-addon">Nome de Contato</span>
+                <?php echo $this->tag->textField(array('Usuario_nome_contato', 'class' => 'form-control')); ?>
+            </div>
+            </p>
+            <p>
+            <div class="input-group col-sm-3">
+                <span class="input-group-addon">Telefone de Contato</span>
+                <?php echo $this->tag->textField(array('Usuario_telefone_contato', 'class' => 'form-control')); ?>
+            </div>
+            </p>
+            <p>
+            <div class="input-group col-sm-4">
+                <span class="input-group-addon">E-mail de Contato</span>
+                <?php echo $this->tag->textField(array('Usuario_email_contato', 'class' => 'form-control')); ?>
+            </div>
+            </p>
+            <p>
+            <div class="input-group col-sm-4">
+                <span class="input-group-addon">Morada de Contato</span>
+                <?php echo $this->tag->textField(array('Usuario_morada_contato', 'class' => 'form-control')); ?>
+            </div>
+            </p>
+            <p>
+            <h3><label class="label label-default">Informação de Login</label></h3>
+            </p>
+            <p>
+            <div class="input-group col-sm-4">
+                <span class="input-group-addon">Usuário de Login</span>
+                <?php echo $this->tag->textField(array('Usuario_login', 'class' => 'form-control')); ?>
+            </div>
+            </p>
+            <p>
+            <div class="input-group col-sm-5">
+                <span class="input-group-addon">Digite a Password</span>
+                <?php echo $this->tag->passwordField(array('Usuario_password', 'class' => 'form-control')); ?>
+            </div>
+            </p>
+            <p>
+            <div class="input-group col-sm-5">
+                <span class="input-group-addon">Confirme a Password</span>
+                <?php echo $this->tag->passwordField(array('Usuario_password_conf', 'class' => 'form-control')); ?>
+            </div>
+            </p>
+            <p>
+            <div class="input-group col-sm-1">
+                <div id="selects">
+                <h3><label class="label label-default">Usuário Tipo</label></h3>
+                <?php echo $this->tag->select(array('type', $userType, 'class' => 'form-control', 'using' => array('id', 'name'), 'onchange' => 'getAdmins(document.getElementById(\'client\').value,this.value)')); ?>
+                <h3><label class="label label-default">Associação Cliente</label></h3>
+                <?php echo $this->tag->select(array('client', $clients, 'class' => 'form-control', 'using' => array('user_id', 'user_name'), 'onchange' => 'getAdmins(this.value,document.getElementById(\'type\').value)')); ?>
+                </div>
+            </div>
+            </p>
+            <br>
+            <div id="cadatroBTN">
+            <p>
+            <?php echo $this->tag->submitButton(array('Cadastrar', 'class' => 'btn btn-primary')); ?>
+            </p>
+            </div>
+    </form>
+    </div>
+</div>
+</div>

@@ -1,0 +1,29 @@
+        <div id="wrapper">
+
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">LOCALIZA</a>
+                </div>
+
+                <ul class="nav navbar-right top-nav">
+                    <li class="h7">
+                        <?php if (!$name) { ?><?php echo $this->tag->linkTo(array('session/new', ' Cadastro', 'class' => 'fa fa-plus')); ?><?php } ?>
+                    </li>
+                    <li class="h7">
+                        <?php if ($name) { ?><?php echo $this->tag->linkTo(array('session/end', ' Logout', 'class' => 'fa fa-sign-out')); ?><?php } else { ?><?php echo $this->tag->linkTo(array('session', ' Login', 'class' => 'fa fa-sign-in')); ?><?php } ?>
+                    </li>
+                    <li class="h7">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php if ($name) { ?><?php echo $name; ?><?php } else { ?>Bem Vindo - Usuário<?php } ?></a>
+                    </li>
+                </ul>
+                
+                <?php echo $this->getContent(); ?>
+
+                

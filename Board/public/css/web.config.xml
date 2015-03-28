@@ -1,0 +1,11 @@
+<?xml version=”1.0″ encoding=”UTF-8″?>
+
+<configuration>
+
+    <system.webServer>
+        <staticcontent>
+            <mimemap fileExtension=".css" mimeType="text/css" />
+        </staticcontent>
+    </system.webServer>
+
+</configuration>

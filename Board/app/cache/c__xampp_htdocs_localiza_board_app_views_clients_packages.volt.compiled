@@ -1,0 +1,76 @@
+<?php echo $this->getContent(); ?>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Cliente<small> -- Gestão de Pacotes</small>
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <?php echo $this->tag->form(array('clients/assocPackage', 'method' => 'post')); ?>
+            <div class="col-lg-8">
+                <?php echo $this->flash->output(); ?>    
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-gears"></i> Grelha de Usuários</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-10">
+                            <table class="table col-lg-5">
+                                <thead>
+                                    <tr>
+                                        <th>ID Pacote</th>
+                                        <th>Nome do Pacote</th>
+                                        <th>Preço do Pacote</th>
+                                        <th>Cliente Associado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (isset($userPackages)) { ?>
+                                    <?php foreach ($userPackages as $userPackage) { ?>
+                                    <?php foreach ($packages as $package) { ?>
+                                    <tr>
+                                        <?php if (isset($userPackage['package_id'])) { ?><?php if ($userPackage['package_id'] == $package['package_id']) { ?><td><?php echo $package['package_id']; ?></td><td><?php echo $package['package_name']; ?></td><td><?php echo $package['package_price']; ?></td>
+                                        <?php if (isset($userPackage)) { ?> <?php foreach ($clients as $client) { ?><?php if ($userPackage['user_id'] == $client['user_id']) { ?> <td><?php echo $client['user_name']; ?></td> <?php $counter += 1; ?> <?php } else { ?> <?php if ($counter == 0) { ?> Não <?php } ?><?php } ?> <?php } ?><?php } else { ?><?php if ($counter == 0) { ?> Não <?php break; ?><?php } ?> <?php } ?><?php } ?> <?php } ?>
+                                    </tr>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="selects" class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-gears"></i> Associação Cliente - Pacote</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4><span class="label label-default">Cliente</span></h4>
+                        <div class="input-group col-sm-11">
+                            <?php echo $this->tag->select(array('client', $clientsSelect, 'id' => 'client', 'class' => 'form-control', 'using' => array('id', 'name'), 'onchange' => 'verifyAssoc(this.value,document.getElementById("pacote").value)')); ?>
+                        </div>
+                        <h4><span class="label label-default">Pacote</span></h4>
+                        <div id="users" class="input-group col-sm-11">
+                            <?php echo $this->tag->select(array('pacote', $packagesSelect, 'id' => 'pacote', 'class' => 'form-control', 'using' => array('id', 'name'), 'onchange' => 'verifyAssoc(document.getElementById("client").value, this.value)')); ?>
+                        </div>
+                        <br>
+                        <p>
+                            <div id="assoc">
+                            <?php echo $this->tag->hiddenField(array('status', 'value' => $status)); ?>
+                            <?php echo $this->tag->submitButton(array($showStatus, 'class' => 'btn btn-primary')); ?>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+                               
